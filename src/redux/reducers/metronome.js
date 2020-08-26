@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { TOGGLE_START_METRONOME, SET_BEAT_NUMBER, CHANGE_BPM } from '../actionTypes';
+import { TOGGLE_START_METRONOME, SET_BEAT_NUMBER, SET_BPM } from '../actionTypes';
 
 const initialState = {
     isPlaying: false,
@@ -12,9 +12,9 @@ export default createReducer(initialState, {
         state.isPlaying = !state.isPlaying;
     },
     [SET_BEAT_NUMBER]: (state, action) => {
-        state.beatNumber = action.payload
+        state.beatNumber = action.payload;
     },
-    [CHANGE_BPM]: (state, action) => {
+    [SET_BPM]: (state, action) => {
         state.bpm = action.payload;
     },
 });

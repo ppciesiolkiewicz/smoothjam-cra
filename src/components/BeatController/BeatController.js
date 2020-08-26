@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from "react-redux";
-import { toggleStartMetronome, setBpm } from '../../redux/actions';
+import { toggleStartMetronome, setBpm, setKey, setProgression } from '../../redux/actions';
 import { Key, Progression } from "@tonaljs/tonal";
 
 
@@ -62,61 +62,24 @@ const BeatProgressContainer = styled.div`
 `;
 
 
-const createProgression = (key, progressionNumerals) => {
-    return Progression.fromRomanNumerals(key, progressionNumerals).map(chord => ({
-        chord,
-        beats: 4,
-    }));
-}
-
 class BeatController extends Component {
-    constructor() {
-        super();
-        const key = 'C';
-        const progressionNumerals = progressions.major[0].numerals;
-        const chords = createProgression(key, progressionNumerals);
-
-        this.state = {
-            key,
-            progressionNumerals,
-            chords,
-        };
-    }
-
-    toggleStart = () => {
-        const { toggleStartMetronome } = this.props;
-        toggleStartMetronome();
-    }
-
-    handleBpmChange = e => {
-        const { setBpm } = this.props;
-        setBpm(e.target.value);
-    }
-
-    handleKeyChange = e => {
-        const { progressionNumerals } = this.state;
-        const key = e.target.value;
-        const chords = createProgression(key, progressionNumerals);
-        this.setState({
-            key,
-            chords
-        });   
-    }
+    toggleStart = () => this.props.toggleStartMetronome();
+    handleBpmChange = e => this.props. setBpm(e.target.value);
+    handleKeyChange = e => this.props.setKey(e.target.value);
 
     get beatCount() {
-        const { chords } = this.state;
+        const { chords } = this.props;
         return chords.reduce((acc, { beats }) => acc + beats, 0);
     }
 
     render() {
-        const { key, chords } = this.state;
-        const { isPlaying, bpm, beatNumber } = this.props;
+        const { isPlaying, bpm, beatNumber, progressionKey, chords } = this.props;
 
         return (
             <div>
                 <button onClick={this.toggleStart}>{isPlaying ? 'Stop' : 'Start'}</button>
                 <input type="number" value={bpm} onChange={this.handleBpmChange} />
-                <input type="string" value={key} onChange={this.handleKeyChange} />
+                <input type="string" value={progressionKey} onChange={this.handleKeyChange} />
 
                 <BeatProgressContainer>
                     {chords.map(({ chord, beats }, chordNoInProgression) => {
@@ -139,13 +102,20 @@ class BeatController extends Component {
     }
 }
 
-const mapStateToProps = ({ metronome: { isPlaying, bpm, beatNumber }}) => ({
-    isPlaying,
-    bpm,
-    beatNumber,
-});
+const mapStateToProps = ({
+        metronome: { isPlaying, bpm, beatNumber },
+        progression: { chords, key, progression, availableProgressions }
+    }) => ({
+        isPlaying,
+        bpm,
+        beatNumber,
+        chords,
+        progressionKey: key,
+        progression,
+        availableProgressions
+    });
 
 export default connect(
     mapStateToProps,
-    { toggleStartMetronome, setBpm }
+    { toggleStartMetronome, setBpm, setKey, setProgression }
 )(BeatController);
