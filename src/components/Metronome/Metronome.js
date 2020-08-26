@@ -10,16 +10,12 @@ class MetronomeComponent extends Component {
         this.metronome = new Metronome(() => {
             setBeatNumber(this.metronome.beatNumber);
         });
-
-        console.log(this.props)
     }
 
     componentDidUpdate(prevProps) {
         const { isPlaying, bpm } = this.props;
         const { isPlaying: prevIsPlaying, bpm: prevBpm } = prevProps;
         
-        console.log('component did update')
-
         if (isPlaying !== prevIsPlaying) {
             this.metronome.toggleStart();
         } else if (bpm !== prevBpm) {

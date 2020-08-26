@@ -51,7 +51,6 @@ class Metronome {
             timerID=setInterval(function(){postMessage('tick');},interval)
           }
         } else if (e.data=='stop') {
-          console.log('stopping');
           clearInterval(timerID);
           timerID=null;
         }
