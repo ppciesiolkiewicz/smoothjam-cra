@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import kickWav from './kick.wav'
+import { Key } from "@tonaljs/tonal";
+
+
+console.log(Key.majorKey('C'))
+
+const progressions = [
+    [1, 5, 4, 3]
+]
 
 const BeatProgressDot = styled.div`
     border: 1px solid #000;
@@ -36,12 +44,21 @@ const BeatProgressContainer = styled.div`
     display: flex;
 `;
 
+const bpmToInterval = bpm => {
+    const ONE_MINUTE = 1000 * 60;
+    return ONE_MINUTE / bpm;
+}
+
+
 class BeatController extends Component {
     constructor() {
         super();
+
+        const initialBpm = 100;
         this.state = {
             isPlaying: false,
-            bpm: 100,
+            bpm: initialBpm,
+            interval: bpmToInterval(initialBpm),
             progress: 0,
             chords: [
                 {
@@ -53,11 +70,27 @@ class BeatController extends Component {
                     beats: 4
                 },
                 {
+                    chord: 'Am',
+                    beats: 4
+                },
+                {
+                    chord: 'Em',
+                    beats: 4
+                },
+                {
                     chord: 'F',
                     beats: 4
                 },
                 {
-                    chord: 'A',
+                    chord: 'C',
+                    beats: 4
+                },
+                {
+                    chord: 'F',
+                    beats: 4
+                },
+                {
+                    chord: 'G',
                     beats: 4
                 }
             ],
@@ -70,19 +103,22 @@ class BeatController extends Component {
         this.handleBpmChange = this.handleBpmChange.bind(this);
         this.runBeat = this.runBeat.bind(this);
     }
-
+    
     runBeat() {
-        const ONE_MINUTE = 1000 * 60;
-        const interval = ONE_MINUTE / this.state.bpm;
+        const { interval } = this.state;
+        let timeStart = new Date().getTime();
 
         this.kickSound.pause();
         this.kickSound.currentTime = 0;
         this.kickSound.play();
+
+
         this.beatTimeout = setTimeout(() => {
+            const fix = Math.max(0, (new Date().getTime() - timeStart) - interval);
             this.setState(({ progress }) => ({
                 progress: progress + 1
             }));
-            this.runBeat();
+            this.runBeat(interval - fix);
         }, interval);
     }
 
@@ -90,7 +126,6 @@ class BeatController extends Component {
         this.setState({
             isPlaying: true,
         });
-
         this.runBeat();
     }
 
@@ -103,8 +138,10 @@ class BeatController extends Component {
     }
 
     handleBpmChange(event) {
+        const bpm = event.target.value;
         this.setState({
-            bpm: event.target.value
+            bpm,
+            interval: bpmToInterval(bpm)
         });
     }
 
@@ -120,7 +157,7 @@ class BeatController extends Component {
                     {chords.map(({ chord, beats }, chordNoInProgression) => {
                         const dots = Array(beats).fill().map((_, i) => {
                             let beatNo = chordNoInProgression*4 + i;
-                            const isActive = beatNo === this.state.progress%16;
+                            const isActive = beatNo === this.state.progress%32;
 
                             return <BeatProgressDot key={i} active={isActive}><div>{chord}</div></BeatProgressDot>
                         });
