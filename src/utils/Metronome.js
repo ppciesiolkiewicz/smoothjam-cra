@@ -1,11 +1,9 @@
-
 const NOTE_RESOLUTION_16TH_NOTE = 0;
 const NOTE_RESOLUTION_8TH_NOTE = 1;
 const NOTE_RESOLUTION_4TH_NOTE = 2;
 
-
-
 class Metronome {
+  static startDelta = 0.1;
   static scheduleAheadTime = 0.1;
   static lookahead = 25.0;
 
@@ -117,9 +115,6 @@ class Metronome {
     this.nextNoteStartTime += 0.25 * secondsPerBeat;
 
     this.current16thNote++;
-    // if (this.current16thNote === 16) {
-    //   this.current16thNote = 0;
-    // }
   }
 
   toggleStart() {
@@ -127,7 +122,7 @@ class Metronome {
 
     if (this.isPlaying) {
         this.current16thNote = 0;
-        this.nextNoteStartTime = this.audioContext.currentTime;
+        this.nextNoteStartTime = this.audioContext.currentTime + Metronome.startDelta;
         this.timerWorker.postMessage('start');
     } else {
         this.timerWorker.postMessage('stop');
