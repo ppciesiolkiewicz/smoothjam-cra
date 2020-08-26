@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import kickWav from './kick.wav'
-import { Key } from "@tonaljs/tonal";
+import { connect } from "react-redux";
+import { toggleStartMetronome, setBpm } from '../../redux/actions';
+import { Key, Progression } from "@tonaljs/tonal";
 
 
 console.log(Key.majorKey('C'))
+console.log(Progression.fromRomanNumerals("C", ["IMaj7", "IIm7", "V7"]));
+console.log(Progression.fromRomanNumerals("C", ['I', 'IIIm', 'VIm', 'IIm', 'V']));
 
-const progressions = [
-    [1, 5, 4, 3]
-]
+const progressions = {
+    major: [
+        {
+            numerals: ['I', 'IV', 'V'],
+        },
+        {
+            numerals: ['I', 'IIm', 'V'],
+        },
+        {
+            numerals: ['I', 'VIm', 'IIm', 'V'],
+        },
+        {
+            numerals: ['I', 'IIIm', 'VIm', 'IIm', 'V'],
+        },
+    ],
+
+}
 
 const BeatProgressDot = styled.div`
     border: 1px solid #000;
@@ -44,120 +61,68 @@ const BeatProgressContainer = styled.div`
     display: flex;
 `;
 
-const bpmToInterval = bpm => {
-    const ONE_MINUTE = 1000 * 60;
-    return ONE_MINUTE / bpm;
-}
 
+const createProgression = (key, progressionNumerals) => {
+    return Progression.fromRomanNumerals(key, progressionNumerals).map(chord => ({
+        chord,
+        beats: 4,
+    }));
+}
 
 class BeatController extends Component {
     constructor() {
         super();
+        const key = 'C';
+        const progressionNumerals = progressions.major[0].numerals;
+        const chords = createProgression(key, progressionNumerals);
 
-        const initialBpm = 100;
         this.state = {
-            isPlaying: false,
-            bpm: initialBpm,
-            interval: bpmToInterval(initialBpm),
-            progress: 0,
-            chords: [
-                {
-                    chord: 'C',
-                    beats: 4
-                },
-                {
-                    chord: 'G',
-                    beats: 4
-                },
-                {
-                    chord: 'Am',
-                    beats: 4
-                },
-                {
-                    chord: 'Em',
-                    beats: 4
-                },
-                {
-                    chord: 'F',
-                    beats: 4
-                },
-                {
-                    chord: 'C',
-                    beats: 4
-                },
-                {
-                    chord: 'F',
-                    beats: 4
-                },
-                {
-                    chord: 'G',
-                    beats: 4
-                }
-            ],
+            key,
+            progressionNumerals,
+            chords,
         };
-
-        this.kickSound = new Audio(kickWav);
-        this.beatTimeout = null;
-        this.start = this.start.bind(this);
-        this.stop = this.stop.bind(this);
-        this.handleBpmChange = this.handleBpmChange.bind(this);
-        this.runBeat = this.runBeat.bind(this);
-    }
-    
-    runBeat() {
-        const { interval } = this.state;
-        let timeStart = new Date().getTime();
-
-        this.kickSound.pause();
-        this.kickSound.currentTime = 0;
-        this.kickSound.play();
-
-
-        this.beatTimeout = setTimeout(() => {
-            const fix = Math.max(0, (new Date().getTime() - timeStart) - interval);
-            this.setState(({ progress }) => ({
-                progress: progress + 1
-            }));
-            this.runBeat(interval - fix);
-        }, interval);
     }
 
-    start() {
+    toggleStart = () => {
+        const { toggleStartMetronome } = this.props;
+        toggleStartMetronome();
+    }
+
+    handleBpmChange = e => {
+        const { setBpm } = this.props;
+        setBpm(e.target.value);
+    }
+
+    handleKeyChange = e => {
+        const { progressionNumerals } = this.state;
+        const key = e.target.value;
+        const chords = createProgression(key, progressionNumerals);
         this.setState({
-            isPlaying: true,
-        });
-        this.runBeat();
+            key,
+            chords
+        });   
     }
 
-    stop() {
-        this.setState({
-            isPlaying: false,
-            progress: 0
-        });
-        clearTimeout(this.beatTimeout);
-    }
-
-    handleBpmChange(event) {
-        const bpm = event.target.value;
-        this.setState({
-            bpm,
-            interval: bpmToInterval(bpm)
-        });
+    get beatCount() {
+        const { chords } = this.state;
+        return chords.reduce((acc, { beats }) => acc + beats, 0);
     }
 
     render() {
-        const { bpm, progress, chords } = this.state;
+        const { key, chords } = this.state;
+        const { isPlaying, bpm, beatNumber } = this.props;
 
         return (
             <div>
-                <button onClick={this.start}>Start</button>
-                <button onClick={this.stop}>Stop</button>
+                <button onClick={this.toggleStart}>{isPlaying ? 'Stop' : 'Start'}</button>
                 <input type="number" value={bpm} onChange={this.handleBpmChange} />
+                <input type="string" value={key} onChange={this.handleKeyChange} />
+
                 <BeatProgressContainer>
                     {chords.map(({ chord, beats }, chordNoInProgression) => {
                         const dots = Array(beats).fill().map((_, i) => {
-                            let beatNo = chordNoInProgression*4 + i;
-                            const isActive = beatNo === this.state.progress%32;
+                            let beatNo = chordNoInProgression * 4 + i; // TODO: magic 4
+                            const isActive = beatNo === beatNumber % this.beatCount;
 
                             return <BeatProgressDot key={i} active={isActive}><div>{chord}</div></BeatProgressDot>
                         });
@@ -169,11 +134,18 @@ class BeatController extends Component {
                         );
                     })}
                 </BeatProgressContainer>
-                
             </div>
         );
     }
-
 }
 
-export default BeatController;
+const mapStateToProps = ({ metronome: { isPlaying, bpm, beatNumber }}) => ({
+    isPlaying,
+    bpm,
+    beatNumber,
+});
+
+export default connect(
+    mapStateToProps,
+    { toggleStartMetronome, setBpm }
+)(BeatController);
