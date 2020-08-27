@@ -1,1 +1,1 @@
-export { default } from './BeatController';
+export { default } from './Controls';

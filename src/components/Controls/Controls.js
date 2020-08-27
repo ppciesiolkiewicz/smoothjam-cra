@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleStartMetronome, setBpm, setKey, setProgressionType, setProgressionIndex } from '../../redux/actions';
 import {
@@ -14,12 +14,7 @@ import {
 import { Key, Progression } from '@tonaljs/tonal';
 import { Button, Slider, Select, MenuItem, InputLabel } from '@material-ui/core';
 
-
-console.log(Key.majorKey('C'))
-console.log(Progression.fromRomanNumerals("C", ["IMaj7", "IIm7", "V7"]));
-console.log(Progression.fromRomanNumerals("C", ['I', 'IIIm', 'VIm', 'IIm', 'V']));
-
-function BeatController() {
+function Controls() {
     const dispatch = useDispatch();
     const toggleStart = () => dispatch(toggleStartMetronome());
     const handleBpmChange = (_, value) => dispatch(setBpm(value));
@@ -83,4 +78,4 @@ function BeatController() {
     );
 };
 
-export default BeatController;
+export default Controls;
