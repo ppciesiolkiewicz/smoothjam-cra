@@ -3,29 +3,29 @@ import styled from 'styled-components';
 import { connect } from "react-redux";
 import { toggleStartMetronome, setBpm, setKey, setProgression } from '../../redux/actions';
 import { Key, Progression } from "@tonaljs/tonal";
+import { Button, Slider, Typography, Select, MenuItem, InputLabel, Input } from '@material-ui/core';
 
 
 console.log(Key.majorKey('C'))
 console.log(Progression.fromRomanNumerals("C", ["IMaj7", "IIm7", "V7"]));
 console.log(Progression.fromRomanNumerals("C", ['I', 'IIIm', 'VIm', 'IIm', 'V']));
 
-const progressions = {
-    major: [
-        {
-            numerals: ['I', 'IV', 'V'],
-        },
-        {
-            numerals: ['I', 'IIm', 'V'],
-        },
-        {
-            numerals: ['I', 'VIm', 'IIm', 'V'],
-        },
-        {
-            numerals: ['I', 'IIIm', 'VIm', 'IIm', 'V'],
-        },
-    ],
 
-}
+const availableKeys = [
+    'C',
+    'C#',
+    'D',
+    'D#',
+    'E',
+    'F',
+    'F#',
+    'G',
+    'G#',
+    'A',
+    'A#',
+    'B',
+    'C'
+];
 
 const BeatProgressDot = styled.div`
     border: 1px solid #000;
@@ -64,7 +64,7 @@ const BeatProgressContainer = styled.div`
 
 class BeatController extends Component {
     toggleStart = () => this.props.toggleStartMetronome();
-    handleBpmChange = e => this.props. setBpm(e.target.value);
+    handleBpmChange = (e, value) => this.props. setBpm(value);
     handleKeyChange = e => this.props.setKey(e.target.value);
 
     get beatCount() {
@@ -77,9 +77,27 @@ class BeatController extends Component {
 
         return (
             <div>
-                <button onClick={this.toggleStart}>{isPlaying ? 'Stop' : 'Start'}</button>
-                <input type="number" value={bpm} onChange={this.handleBpmChange} />
-                <input type="string" value={progressionKey} onChange={this.handleKeyChange} />
+                <Button variant="contained" color="primary" onClick={this.toggleStart}>{isPlaying ? 'Stop' : 'Start'}</Button>
+                <Typography id="bpm-slider" gutterBottom>
+                    BPM
+                </Typography>
+                <Slider
+                    value={bpm}
+                    onChange={this.handleBpmChange}
+                    aria-labelledby="bpm-slider"
+                    valueLabelDisplay="auto"
+                    step={1}
+                    min={30}
+                    max={220}
+                />
+                <InputLabel id="key-select-label">Key</InputLabel>
+                <Select
+                    labelId="key-select-label"
+                    value={progressionKey}
+                    onChange={this.handleKeyChange}
+                >
+                    {availableKeys.map(k => <MenuItem value={k}>{k}</MenuItem>)}
+                </Select>
 
                 <BeatProgressContainer>
                     {chords.map(({ chord, beats }, chordNoInProgression) => {
