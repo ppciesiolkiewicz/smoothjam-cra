@@ -11,7 +11,6 @@ import {
     selectProgressionType,
     selectProgressionIndex,
 } from '../../redux/selectors';
-import { Key, Progression } from '@tonaljs/tonal';
 import { Button, Slider, Select, MenuItem, InputLabel } from '@material-ui/core';
 
 function Controls() {

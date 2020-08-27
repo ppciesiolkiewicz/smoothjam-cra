@@ -1,6 +1,6 @@
-const NOTE_RESOLUTION_16TH_NOTE = 0;
-const NOTE_RESOLUTION_8TH_NOTE = 1;
-const NOTE_RESOLUTION_4TH_NOTE = 2;
+export const NOTE_RESOLUTION_16TH_NOTE = 0;
+export const NOTE_RESOLUTION_8TH_NOTE = 1;
+export const NOTE_RESOLUTION_4TH_NOTE = 2;
 
 class Metronome {
   static startDelta = 0.1;
@@ -62,7 +62,7 @@ class Metronome {
 
     const worker = new Worker(metronomeWorker);
     worker.onmessage = e => {
-      if (e.data == 'tick') {
+      if (e.data === 'tick') {
         this.schedule();
       }
       else {
@@ -84,10 +84,10 @@ class Metronome {
 
 
   scheduleNote() {
-    if (this.noteResolution == NOTE_RESOLUTION_8TH_NOTE && this.current16thNote % 2) {
+    if (this.noteResolution === NOTE_RESOLUTION_8TH_NOTE && this.current16thNote % 2) {
       return;
     }
-    if (this.noteResolution == NOTE_RESOLUTION_4TH_NOTE && this.current16thNote % 4) {
+    if (this.noteResolution === NOTE_RESOLUTION_4TH_NOTE && this.current16thNote % 4) {
       return;
     }
 
