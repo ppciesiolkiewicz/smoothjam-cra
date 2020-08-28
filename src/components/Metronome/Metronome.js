@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { setBeatNumber } from '../../redux/actions';
 import Metronome from '../../utils/Metronome';
 
@@ -15,7 +15,7 @@ class MetronomeComponent extends Component {
     componentDidUpdate(prevProps) {
         const { isPlaying, bpm } = this.props;
         const { isPlaying: prevIsPlaying, bpm: prevBpm } = prevProps;
-        
+
         if (isPlaying !== prevIsPlaying) {
             this.metronome.toggleStart();
         } else if (bpm !== prevBpm) {
@@ -28,12 +28,9 @@ class MetronomeComponent extends Component {
     }
 }
 
-const mapStateToProps = ({ metronome: { isPlaying, bpm }}) => ({
+const mapStateToProps = ({ metronome: { isPlaying, bpm } }) => ({
     isPlaying,
-    bpm
+    bpm,
 });
 
-export default connect(
-    mapStateToProps,
-    { setBeatNumber }
-)(MetronomeComponent);
+export default connect(mapStateToProps, { setBeatNumber })(MetronomeComponent);

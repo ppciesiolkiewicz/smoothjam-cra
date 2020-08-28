@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { selectBeatNumber, selectChords, selectBeatCount } from '../../redux/selectors';
 
-
-
 const BeatProgressDot = styled.div`
     border: 1px solid #000;
     background-color: #fff;
@@ -23,7 +21,6 @@ const BeatProgressDots = styled.div`
     display: flex;
 `;
 
-
 const Chord = styled.div`
     font-size: 20px;
     margin-left: 3px;
@@ -39,22 +36,26 @@ const BeatProgressContainer = styled.div`
     display: flex;
 `;
 
-
 function ProgressionVisualizer() {
     const chords = useSelector(selectChords);
     const beatNumber = useSelector(selectBeatNumber);
     const beatCount = useSelector(selectBeatCount);
 
-
     return (
         <BeatProgressContainer>
             {chords.map(({ chord, beats }, chordNoInProgression) => {
-                const dots = Array(beats).fill().map((_, i) => {
-                    let beatNo = chordNoInProgression * beats + i;
-                    const isActive = beatNo === beatNumber % beatCount;
+                const dots = Array(beats)
+                    .fill()
+                    .map((_, i) => {
+                        let beatNo = chordNoInProgression * beats + i;
+                        const isActive = beatNo === beatNumber % beatCount;
 
-                    return <BeatProgressDot key={i} active={isActive}><div>{chord}</div></BeatProgressDot>
-                });
+                        return (
+                            <BeatProgressDot key={i} active={isActive}>
+                                <div>{chord}</div>
+                            </BeatProgressDot>
+                        );
+                    });
                 return (
                     <BeatProgressChord key={chordNoInProgression}>
                         <Chord>{chord}</Chord>

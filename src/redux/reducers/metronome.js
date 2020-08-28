@@ -1,4 +1,4 @@
-import { createReducer } from '@reduxjs/toolkit'
+import { createReducer } from '@reduxjs/toolkit';
 import { TOGGLE_START_METRONOME, SET_BEAT_NUMBER, SET_BPM } from '../actionTypes';
 
 const initialState = {
@@ -6,7 +6,7 @@ const initialState = {
     beatNumber: -1,
     bpm: 100,
 };
-  
+
 export default createReducer(initialState, {
     [TOGGLE_START_METRONOME]: state => {
         state.isPlaying = !state.isPlaying;

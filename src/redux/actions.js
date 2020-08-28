@@ -8,30 +8,30 @@ import {
 } from './actionTypes';
 
 export const toggleStartMetronome = () => ({
-  type: TOGGLE_START_METRONOME,
+    type: TOGGLE_START_METRONOME,
 });
 
 export const setBeatNumber = beatNumber => ({
     type: SET_BEAT_NUMBER,
-    payload: beatNumber
+    payload: beatNumber,
 });
-  
+
 export const setBpm = bpm => ({
     type: SET_BPM,
-    payload: bpm
+    payload: bpm,
 });
-  
+
 export const setKey = key => ({
     type: SET_KEY,
-    payload: key
+    payload: key,
 });
 
 export const setProgressionType = progressionType => ({
     type: SET_PROGRESSION_TYPE,
-    payload: progressionType
+    payload: progressionType,
 });
 
 export const setProgressionIndex = progressionIndex => ({
     type: SET_PROGRESSION_INDEX,
-    payload: progressionIndex
+    payload: progressionIndex,
 });

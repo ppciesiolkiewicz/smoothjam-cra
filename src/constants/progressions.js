@@ -18,8 +18,8 @@ const availableProgressions = {
         {
             numerals: ['I', 'IV', 'V'],
             name: 'I-IV-V',
-        },     
-    ]
+        },
+    ],
 };
 
 const availableKeys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C'];
