@@ -50,7 +50,7 @@ function ProgressionVisualizer() {
         <BeatProgressContainer>
             {chords.map(({ chord, beats }, chordNoInProgression) => {
                 const dots = Array(beats).fill().map((_, i) => {
-                    let beatNo = chordNoInProgression * 4 + i; // TODO: magic 4
+                    let beatNo = chordNoInProgression * beats + i;
                     const isActive = beatNo === beatNumber % beatCount;
 
                     return <BeatProgressDot key={i} active={isActive}><div>{chord}</div></BeatProgressDot>
