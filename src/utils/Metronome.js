@@ -25,7 +25,7 @@ class Metronome {
         this.tickCallback = tickCallback || (() => {});
     }
 
-    get beatNumber() {
+    get currentBeat() {
         const RESOLUTION_MAP = {
             0: 1,
             1: 2,

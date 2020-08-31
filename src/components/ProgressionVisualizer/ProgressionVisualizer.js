@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { selectBeatNumber, selectChords, selectBeatCount } from '../../redux/selectors';
+import { selectCurrentBeat, selectChords, selectBeatCount } from '../../redux/selectors';
 
 const BeatProgressDot = styled.div`
     border: 1px solid #000;
@@ -38,7 +38,7 @@ const BeatProgressContainer = styled.div`
 
 function ProgressionVisualizer() {
     const chords = useSelector(selectChords);
-    const beatNumber = useSelector(selectBeatNumber);
+    const currentBeat = useSelector(selectCurrentBeat);
     const beatCount = useSelector(selectBeatCount);
 
     return (
@@ -48,7 +48,7 @@ function ProgressionVisualizer() {
                     .fill()
                     .map((_, i) => {
                         let beatNo = chordNoInProgression * beats + i;
-                        const isActive = beatNo === beatNumber % beatCount;
+                        const isActive = beatNo === currentBeat % beatCount;
 
                         return (
                             <BeatProgressDot key={i} active={isActive}>

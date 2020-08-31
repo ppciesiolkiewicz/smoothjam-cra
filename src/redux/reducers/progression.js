@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { SET_KEY, SET_PROGRESSION_TYPE, SET_PROGRESSION_INDEX } from '../actionTypes';
+import { SET_KEY, SET_PROGRESSION_INDEX, SET_KEY_MODE  } from '../actionTypes';
 import { createChordProgression } from '../../utils/progression';
 
 const availableProgressions = {
@@ -29,20 +29,20 @@ const availableProgressions = {
     ],
 };
 const availableKeys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C'];
-const initialProgressionType = 'major';
+const availableKeyModes = ['major', 'minor'];
+
 const initialProgressionIndex = 0;
 const initialKey = 'C';
+const initialKeyMode = 'major';
 
 const initialState = {
     availableKeys,
     availableProgressions,
-    progressionType: initialProgressionType,
+    availableKeyModes,
     progressionIndex: initialProgressionIndex,
     key: initialKey,
-    chords: createChordProgression(
-        initialKey,
-        availableProgressions[initialProgressionType][initialProgressionIndex].numerals
-    ),
+    keyMode: initialKeyMode,
+    chords: createChordProgression(initialKey, availableProgressions[initialKeyMode][initialProgressionIndex].numerals),
 };
 
 export default createReducer(initialState, {
@@ -50,22 +50,22 @@ export default createReducer(initialState, {
         state.key = action.payload;
         state.chords = createChordProgression(
             state.key,
-            availableProgressions[state.progressionType][state.progressionIndex].numerals
+            availableProgressions[state.keyMode][state.progressionIndex].numerals
         );
     },
-    [SET_PROGRESSION_TYPE]: (state, action) => {
-        state.progressionType = action.payload;
+    [SET_KEY_MODE]: (state, action) => {
+        state.keyMode = action.payload;
         state.progressionIndex = 0;
         state.chords = createChordProgression(
             state.key,
-            availableProgressions[state.progressionType][state.progressionIndex].numerals
+            availableProgressions[state.keyMode][state.progressionIndex].numerals
         );
     },
     [SET_PROGRESSION_INDEX]: (state, action) => {
         state.progressionIndex = action.payload;
         state.chords = createChordProgression(
             state.key,
-            availableProgressions[state.progressionType][state.progressionIndex].numerals
+            availableProgressions[state.keyMode][state.progressionIndex].numerals
         );
     },
 });

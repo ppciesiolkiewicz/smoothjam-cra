@@ -27,8 +27,6 @@ function StartStopButton() {
     const toggleStart = () => dispatch(toggleStartMetronome());
     const isPlaying = useSelector(selectIsPlaying);
 
-    console.log(classes)
-
     return isPlaying ? (
         <Fab aria-label="stop" size="large" onClick={toggleStart} color="secondary" classes={classes}>
             <Stop />
