@@ -28,7 +28,7 @@ const availableProgressions = {
         },
     ],
 };
-const availableKeyTonics = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C'];
+const availableKeyTonics = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
 const availableKeyModes = ['major', 'minor'];
 
 const initialProgressionIndex = 0;
@@ -47,6 +47,7 @@ const initialState = {
         initialKeyTonic,
         availableProgressions[initialKeyType][initialProgressionIndex].numerals
     ),
+    key: getKey(initialKeyTonic, initialKeyType),
 };
 
 export default createReducer(initialState, {
