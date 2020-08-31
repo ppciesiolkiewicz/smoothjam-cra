@@ -1,16 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectChords } from '../../redux/selectors';
+import { selectProgressionChords } from '../../redux/selectors';
 import { Grid } from '@material-ui/core';
 
 import Chord from '../Chord';
 
 function ChordVisualizer() {
-    const chords = useSelector(selectChords);
+    const progressionChords = useSelector(selectProgressionChords);
 
     return (
         <Grid container spacing={1}>
-            {chords.map(({ chord }, i) => {
+            {progressionChords.map(({ chord }, i) => {
                 const sharp = chord.slice(1, 2) === '#' ? 'Sharp' : '';
                 const chordKey = `${chord.slice(0, 1)}${sharp}`;
                 const suffix = chord.slice(-1) === 'm' ? 'minor' : 'major';

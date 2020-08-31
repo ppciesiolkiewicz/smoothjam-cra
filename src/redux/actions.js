@@ -2,9 +2,9 @@ import {
     TOGGLE_START_METRONOME,
     SET_CURRENT_BEAT,
     SET_BPM,
-    SET_KEY,
-    SET_KEY_MODE,
-    SET_PROGRESSION_INDEX,
+    SET_SELECTED_KEY_TONIC,
+    SET_SELECTED_KEY_TYPE,
+    SET_SELECTED_PROGRESSION_INDEX,
 } from './actionTypes';
 
 export const toggleStartMetronome = () => ({
@@ -21,17 +21,17 @@ export const setBpm = bpm => ({
     payload: bpm,
 });
 
-export const setKey = key => ({
-    type: SET_KEY,
-    payload: key,
+export const setSelectedKeyTonic = keyTonic => ({
+    type: SET_SELECTED_KEY_TONIC,
+    payload: keyTonic,
 });
 
-export const setKeyMode = keyMode => ({
-    type: SET_KEY_MODE,
-    payload: keyMode,
+export const setSelectedKeyType = keyType => ({
+    type: SET_SELECTED_KEY_TYPE,
+    payload: keyType,
 });
 
-export const setProgressionIndex = progressionIndex => ({
-    type: SET_PROGRESSION_INDEX,
-    payload: progressionIndex,
+export const setSelectedProgressionIndex = selectedProgressionIndex => ({
+    type: SET_SELECTED_PROGRESSION_INDEX,
+    payload: selectedProgressionIndex,
 });

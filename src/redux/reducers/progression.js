@@ -1,6 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { SET_KEY, SET_PROGRESSION_INDEX, SET_KEY_MODE  } from '../actionTypes';
-import { createChordProgression } from '../../utils/progression';
+import { SET_SELECTED_KEY_TONIC, SET_SELECTED_KEY_TYPE, SET_SELECTED_PROGRESSION_INDEX } from '../actionTypes';
+import { createChordProgression, getKey } from '../../utils/progression';
+import { ChordType, Chord, ScaleType, Scale, Key } from "@tonaljs/tonal";
 
 const availableProgressions = {
     major: [
@@ -23,49 +24,55 @@ const availableProgressions = {
     ],
     minor: [
         {
-            numerals: ['I', 'IV', 'V'],
-            name: 'I-IV-V',
+            numerals: ['I', 'IIIm', 'VIm', 'IIm', 'V'],
+            name: 'I-IIIm-VIm-IIm-V',
         },
     ],
 };
-const availableKeys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C'];
+const availableKeyTonics = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C'];
 const availableKeyModes = ['major', 'minor'];
 
 const initialProgressionIndex = 0;
-const initialKey = 'C';
-const initialKeyMode = 'major';
+const initialKeyTonic = 'C';
+const initialKeyType = 'major';
 
 const initialState = {
-    availableKeys,
+    availableKeyTonics,
     availableProgressions,
     availableKeyModes,
-    progressionIndex: initialProgressionIndex,
-    key: initialKey,
-    keyMode: initialKeyMode,
-    chords: createChordProgression(initialKey, availableProgressions[initialKeyMode][initialProgressionIndex].numerals),
+
+    selectedProgressionIndex: initialProgressionIndex,
+    selectedKeyTonic: initialKeyTonic,
+    selectedKeyType: initialKeyType,
+    progressionChords: createChordProgression(
+        initialKeyTonic,
+        availableProgressions[initialKeyType][initialProgressionIndex].numerals
+    ),
 };
 
 export default createReducer(initialState, {
-    [SET_KEY]: (state, action) => {
-        state.key = action.payload;
-        state.chords = createChordProgression(
-            state.key,
-            availableProgressions[state.keyMode][state.progressionIndex].numerals
+    [SET_SELECTED_KEY_TONIC]: (state, action) => {
+        state.selectedKeyTonic = action.payload;
+        state.key = getKey(state.selectedKeyTonic, state.selectedKeyType);
+        state.progressionChords = createChordProgression(
+            state.selectedKeyTonic,
+            availableProgressions[state.selectedKeyType][state.selectedProgressionIndex].numerals
         );
     },
-    [SET_KEY_MODE]: (state, action) => {
-        state.keyMode = action.payload;
-        state.progressionIndex = 0;
-        state.chords = createChordProgression(
-            state.key,
-            availableProgressions[state.keyMode][state.progressionIndex].numerals
+    [SET_SELECTED_KEY_TYPE]: (state, action) => {
+        state.selectedKeyType = action.payload;
+        state.selectedProgressionIndex = 0;
+        state.key = getKey(state.selectedKeyTonic, state.selectedKeyType);
+        state.progressionChords = createChordProgression(
+            state.selectedKeyTonic,
+            availableProgressions[state.selectedKeyType][state.selectedProgressionIndex].numerals
         );
     },
-    [SET_PROGRESSION_INDEX]: (state, action) => {
-        state.progressionIndex = action.payload;
-        state.chords = createChordProgression(
-            state.key,
-            availableProgressions[state.keyMode][state.progressionIndex].numerals
+    [SET_SELECTED_PROGRESSION_INDEX]: (state, action) => {
+        state.selectedProgressionIndex = action.payload;
+        state.progressionChords = createChordProgression(
+            state.selectedKeyTonic,
+            availableProgressions[state.selectedKeyType][state.selectedProgressionIndex].numerals
         );
     },
 });

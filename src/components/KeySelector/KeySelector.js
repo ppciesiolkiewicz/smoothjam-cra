@@ -1,32 +1,32 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setKey, setKeyMode } from '@redux/actions';
-import { selectKey, selectKeyMode, selectAvailableKeys } from '@redux/selectors';
+import { setSelectedKeyTonic, setSelectedKeyType } from '@redux/actions';
+import { selectSelectedKeyTonic, selectSelectedKeyType, selectAvailableKeys } from '@redux/selectors';
 import { Box, Select, MenuItem, InputLabel } from '@material-ui/core';
 
 function Controls() {
     const dispatch = useDispatch();
-    const handleKeyChange = e => dispatch(setKey(e.target.value));
-    const handleKeyModeChange = e => dispatch(setKeyMode(e.target.value));
+    const handleKeyTonicChange = e => dispatch(setSelectedKeyTonic(e.target.value));
+    const handleKeyTypeChange = e => dispatch(setSelectedKeyType(e.target.value));
 
-    const key = useSelector(selectKey);
-    const keyType = useSelector(selectKeyMode);
+    const keyTonic = useSelector(selectSelectedKeyTonic);
+    const keyType = useSelector(selectSelectedKeyType);
 
-    const availableKeys = useSelector(selectAvailableKeys);
+    const availableKeyTonics = useSelector(selectAvailableKeys);
     const availableKeyModes = useSelector(state => state.progression.availableKeyModes);
 
     return (
         <Box>
             <InputLabel id="key-select-label">Key</InputLabel>
 
-            <Select labelId="key-select-label" value={key} onChange={handleKeyChange}>
-                {availableKeys.map(k => (
+            <Select labelId="key-select-label" value={keyTonic} onChange={handleKeyTonicChange}>
+                {availableKeyTonics.map(k => (
                     <MenuItem key={k} value={k}>
                         {k}
                     </MenuItem>
                 ))}
             </Select>
-            <Select value={keyType} onChange={handleKeyModeChange}>
+            <Select value={keyType} onChange={handleKeyTypeChange}>
                 {availableKeyModes.map((t, index) => (
                     <MenuItem key={index} value={t}>
                         {t}
