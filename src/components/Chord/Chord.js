@@ -14,6 +14,7 @@ const NavigationContainer = styled.div`
 function Chords({ chordKey, suffix }) {
     const [selectedPositionIdx, setSelectedPositionIdx] = useState(0);
 
+    console.log(guitarChords)
     if (!guitarChords.chords[chordKey]) {
         console.error('No chord for ', { chordKey, suffix });
         return null;
