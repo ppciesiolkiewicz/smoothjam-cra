@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Chord from '@tombatossals/react-chords/lib/Chord';
-import guitarChords from '../../constants/chords/guitar.json';
+import { guitarChords } from '../../constants/chords';
 import { IconButton, Typography, Box } from '@material-ui/core';
 import { NavigateNext, NavigateBefore } from '@material-ui/icons';
 

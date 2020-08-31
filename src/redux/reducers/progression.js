@@ -1,7 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { SET_SELECTED_KEY_TONIC, SET_SELECTED_KEY_TYPE, SET_SELECTED_PROGRESSION_INDEX } from '../actionTypes';
 import { createChordProgression, getKey } from '../../utils/progression';
-import { ChordType, Chord, ScaleType, Scale, Key } from "@tonaljs/tonal";
 
 const availableProgressions = {
     major: [

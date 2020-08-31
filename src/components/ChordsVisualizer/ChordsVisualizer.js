@@ -11,9 +11,8 @@ function ChordVisualizer() {
     return (
         <Grid container spacing={1}>
             {progressionChords.map(({ chord }, i) => {
-                const sharp = chord.slice(1, 2) === '#' ? 'Sharp' : '';
-                const chordKey = `${chord.slice(0, 1)}${sharp}`;
-                const suffix = chord.slice(-1) === 'm' ? 'minor' : 'major';
+                const chordKey = chord.tonic;
+                const suffix = chord.type;
 
                 return (
                     <Grid key={i} item xs={6} sm={3} md={2}>

@@ -37,13 +37,13 @@ const BeatProgressContainer = styled.div`
 `;
 
 function ProgressionVisualizer() {
-    const chords = useSelector(selectProgressionChords);
+    const progressionChords = useSelector(selectProgressionChords);
     const currentBeat = useSelector(selectCurrentBeat);
     const beatCount = useSelector(selectBeatCount);
 
     return (
         <BeatProgressContainer>
-            {chords.map(({ chord, beats }, chordNoInProgression) => {
+            {progressionChords.map(({ chord: { symbol: chordSymbol }, beats }, chordNoInProgression) => {
                 const dots = Array(beats)
                     .fill()
                     .map((_, i) => {
@@ -52,13 +52,13 @@ function ProgressionVisualizer() {
 
                         return (
                             <BeatProgressDot key={i} active={isActive}>
-                                <div>{chord}</div>
+                                <div>{chordSymbol}</div>
                             </BeatProgressDot>
                         );
                     });
                 return (
                     <BeatProgressChord key={chordNoInProgression}>
-                        <Chord>{chord}</Chord>
+                        <Chord>{chordSymbol}</Chord>
                         <BeatProgressDots>{dots}</BeatProgressDots>
                     </BeatProgressChord>
                 );

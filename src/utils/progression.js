@@ -1,8 +1,8 @@
-import { Progression, Key } from '@tonaljs/tonal';
+import { Progression, Key, Chord } from '@tonaljs/tonal';
 
 export const createChordProgression = (key, progressionNumerals) => {
-    return Progression.fromRomanNumerals(key, progressionNumerals).map(chord => ({
-        chord,
+    return Progression.fromRomanNumerals(key, progressionNumerals).map(chordName => ({
+        chord: Chord.get(chordName),
         beats: 4,
     }));
 };
