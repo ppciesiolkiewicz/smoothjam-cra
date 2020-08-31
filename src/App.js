@@ -5,15 +5,23 @@ import Controls from './components/Controls';
 import ProgressionVisualizer from './components/ProgressionVisualizer';
 import Metronome from './components/Metronome';
 import ChordVisualizer from './components/ChordsVisualizer/ChordsVisualizer';
+import { CssBaseline } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme();
 
 function App() {
     return (
-        <Provider store={store}>
-            <Metronome />
-            <Controls />
-            <ProgressionVisualizer />
-            <ChordVisualizer />
-        </Provider>
+        <ThemeProvider theme={theme}>
+            <CssBaseline>
+                <Provider store={store}>
+                    <Metronome />
+                    <Controls />
+                    <ProgressionVisualizer />
+                    <ChordVisualizer />
+                </Provider>
+            </CssBaseline>
+        </ThemeProvider>
     );
 }
 

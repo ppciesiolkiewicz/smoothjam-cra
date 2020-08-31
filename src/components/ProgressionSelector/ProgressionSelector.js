@@ -27,13 +27,17 @@ function ProgressionSelector() {
                 value={progressionType}
                 onChange={handleProgressionTypeChange}
             >
-                {availableProgressionTypes.map(t => (
-                    <MenuItem value={t}>{t}</MenuItem>
+                {availableProgressionTypes.map((t, index) => (
+                    <MenuItem key={index} value={t}>
+                        {t}
+                    </MenuItem>
                 ))}
             </Select>
             <Select labelId="progression-select-label" value={progressionIndex} onChange={handleProgressionIndexChange}>
                 {availableProgressions.map((p, index) => (
-                    <MenuItem value={index}>{p.name}</MenuItem>
+                    <MenuItem key={index} value={index}>
+                        {p.name}
+                    </MenuItem>
                 ))}
             </Select>
         </Box>
