@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleStartMetronome, setBpm, setKey, setProgressionType, setProgressionIndex } from '../../redux/actions';
+import { toggleStartMetronome, setBpm, setKey, setProgressionType, setProgressionIndex } from '@redux/actions';
 import {
     selectIsPlaying,
     selectBpm,
@@ -10,7 +10,7 @@ import {
     selectAvailableProgressions,
     selectProgressionType,
     selectProgressionIndex,
-} from '../../redux/selectors';
+} from '@redux/selectors';
 import { Button, Slider, Select, MenuItem, InputLabel } from '@material-ui/core';
 
 function Controls() {
