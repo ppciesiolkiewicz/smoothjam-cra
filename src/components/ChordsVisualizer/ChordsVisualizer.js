@@ -1,25 +1,20 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectProgressionChords } from '../../redux/selectors';
+import { selectProgressionChords } from '@redux/selectors';
 import { Grid } from '@material-ui/core';
 
-import Chord from '../Chord';
+import Chord from '@components/Chord';
 
 function ChordVisualizer() {
     const progressionChords = useSelector(selectProgressionChords);
 
     return (
         <Grid container spacing={1}>
-            {progressionChords.map(({ chord }, i) => {
-                const chordKey = chord.tonic;
-                const suffix = chord.type;
-
-                return (
-                    <Grid key={i} item xs={6} sm={3} md={2}>
-                        <Chord chordKey={chordKey} suffix={suffix} />
-                    </Grid>
-                );
-            })}
+            {progressionChords.map(({ chord }, i) => (
+                <Grid key={i} item xs={6} sm={3} md={2}>
+                    <Chord chord={chord} />
+                </Grid>
+            ))}
         </Grid>
     );
 }

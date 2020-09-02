@@ -12,19 +12,19 @@ const NavigationContainer = styled.div`
     justify-content: space-between;
 `;
 
-function Chords({ chordKey, suffix }) {
+function Chords({ chord: { tonic, suffix, symbol } }) {
     const [selectedPositionIdx, setSelectedPositionIdx] = useState(0);
     const chordPositions = useMemo(
         () =>
             createRotatingIndexArray(
-                (guitarChords.chords?.[chordKey] ?? []).find(c => c?.suffix === suffix)?.positions ?? []
+                (guitarChords.chords?.[tonic] ?? []).find(c => c?.suffix === suffix)?.positions ?? []
             ),
-        [chordKey, suffix]
+        [tonic, suffix]
     );
     const chordPosition = chordPositions?.[selectedPositionIdx];
 
     if (!chordPosition) {
-        console.error('No chord for ', { chordKey, suffix });
+        console.error('No chord for ', { tonic, suffix });
         return null;
     }
 
@@ -37,10 +37,7 @@ function Chords({ chordKey, suffix }) {
 
     return (
         <Box>
-            <Typography>
-                {chordKey}
-                {suffix}
-            </Typography>
+            <Typography>{symbol}</Typography>
             <NavigationContainer>
                 <IconButton size="small" onClick={prevPosition}>
                     <NavigateBefore />
@@ -70,8 +67,11 @@ function Chords({ chordKey, suffix }) {
 }
 
 Chords.propTypes = {
-    chordKey: PropTypes.string,
-    suffix: PropTypes.string,
+    chord: PropTypes.shape({
+        tonic: PropTypes.string,
+        suffix: PropTypes.string,
+        symbol: PropTypes.string,
+    }),
 };
 
 export default Chords;
