@@ -13,7 +13,7 @@ function Controls() {
     const keyType = useSelector(selectSelectedKeyType);
 
     const availableKeyTonics = useSelector(selectAvailableKeys);
-    const availableKeyModes = useSelector(state => state.progression.availableKeyModes);
+    const availableKeyTypes = useSelector(state => state.progression.availableKeyTypes);
 
     return (
         <Box>
@@ -27,7 +27,7 @@ function Controls() {
                 ))}
             </Select>
             <Select value={keyType} onChange={handleKeyTypeChange}>
-                {availableKeyModes.map((t, index) => (
+                {availableKeyTypes.map((t, index) => (
                     <MenuItem key={index} value={t}>
                         {t}
                     </MenuItem>

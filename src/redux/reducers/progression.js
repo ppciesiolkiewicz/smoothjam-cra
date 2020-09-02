@@ -29,7 +29,7 @@ const availableProgressions = {
     ],
 };
 const availableKeyTonics = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
-const availableKeyModes = ['major', 'minor'];
+const availableKeyTypes = ['major', 'minor'];
 
 const initialProgressionIndex = 0;
 const initialKeyTonic = 'C';
@@ -38,7 +38,7 @@ const initialKeyType = 'major';
 const initialState = {
     availableKeyTonics,
     availableProgressions,
-    availableKeyModes,
+    availableKeyTypes,
 
     selectedProgressionIndex: initialProgressionIndex,
     selectedKeyTonic: initialKeyTonic,
