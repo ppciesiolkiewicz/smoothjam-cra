@@ -17,7 +17,7 @@ function Chords({ chordKey, suffix }) {
     const chordPositions = useMemo(
         () =>
             createRotatingIndexArray(
-                (guitarChords.chords?.[chordKey] ?? []).find(c => c?.suffix === suffix)?.positions
+                (guitarChords.chords?.[chordKey] ?? []).find(c => c?.suffix === suffix)?.positions ?? []
             ),
         [chordKey, suffix]
     );
