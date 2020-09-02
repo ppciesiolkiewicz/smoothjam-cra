@@ -1,7 +1,8 @@
-const { override, addBundleVisualizer, addWebpackAlias } = require('customize-cra');
+const { override, addBundleVisualizer, addWebpackAlias, useBabelRc } = require('customize-cra');
 const path = require('path');
 
 module.exports = override(
+    useBabelRc(),
     process.env.BUNDLE_VISUALIZE === 1 && addBundleVisualizer(),
     addWebpackAlias({
         '@': path.resolve(__dirname, 'src'),
