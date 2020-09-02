@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Chord from '@tombatossals/react-chords/lib/Chord';
-import { guitarChords } from '../../constants/chords';
+import { guitarChords } from '@constants/chords';
 import { IconButton, Typography, Box } from '@material-ui/core';
 import { NavigateNext, NavigateBefore } from '@material-ui/icons';
+import createRotatingIndexArray from '@utils/RotatingIndexArray';
 
 const NavigationContainer = styled.div`
     display: flex;
@@ -13,29 +14,25 @@ const NavigationContainer = styled.div`
 
 function Chords({ chordKey, suffix }) {
     const [selectedPositionIdx, setSelectedPositionIdx] = useState(0);
+    const chordPositions = useMemo(
+        () =>
+            createRotatingIndexArray(
+                (guitarChords.chords?.[chordKey] ?? []).find(c => c?.suffix === suffix)?.positions
+            ),
+        [chordKey, suffix]
+    );
+    const chordPosition = chordPositions?.[selectedPositionIdx];
 
-    console.log(guitarChords)
-    if (!guitarChords.chords[chordKey]) {
+    if (!chordPosition) {
         console.error('No chord for ', { chordKey, suffix });
         return null;
     }
 
-    const chordPositions = guitarChords.chords[chordKey].find(c => c.suffix === suffix).positions;
-    const chordPosition = chordPositions[selectedPositionIdx];
-
-    const rotatePosition = position => {
-        const chordPositionsCount = chordPositions.length;
-        let newPosition = position % chordPositionsCount;
-        newPosition = newPosition < 0 ? chordPositionsCount + newPosition : newPosition;
-        return newPosition;
-    };
     const nextPosition = () => {
-        const newPosition = rotatePosition(selectedPositionIdx + 1);
-        setSelectedPositionIdx(newPosition);
+        setSelectedPositionIdx(selectedPositionIdx + 1);
     };
     const prevPosition = () => {
-        const newPosition = rotatePosition(selectedPositionIdx - 1);
-        setSelectedPositionIdx(newPosition);
+        setSelectedPositionIdx(selectedPositionIdx - 1);
     };
 
     return (
@@ -49,7 +46,7 @@ function Chords({ chordKey, suffix }) {
                     <NavigateBefore />
                 </IconButton>
                 <Typography>
-                    {selectedPositionIdx + 1}/{chordPositions.length}
+                    {chordPositions.getBoundedIndex(selectedPositionIdx) + 1}/{chordPositions.length}
                 </Typography>
                 <IconButton size="small" onClick={nextPosition}>
                     <NavigateNext />
@@ -66,7 +63,7 @@ function Chords({ chordKey, suffix }) {
                         standard: ['E', 'A', 'D', 'G', 'B', 'E'],
                     },
                 }}
-                lite={true}
+                lite={false}
             />
         </Box>
     );
