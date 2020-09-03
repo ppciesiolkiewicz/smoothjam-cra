@@ -1,6 +1,7 @@
-import { Progression, Key, Chord } from '@tonaljs/tonal';
+import { Progression, Key, Chord, Scale } from '@tonaljs/tonal';
 
 export const createChordProgression = (keyTonic, progressionNumerals) => {
+    progressionNumerals = progressionNumerals || [];
     return Progression.fromRomanNumerals(keyTonic, progressionNumerals).map(chordName => {
         const chord = Chord.get(chordName);
         const { type, tonic, symbol } = chord;
@@ -20,4 +21,14 @@ export const getKey = (tonic, type) => {
     const key = type === 'major' ? Key.majorKey(tonic) : Key.minorKey(tonic);
 
     return key;
+};
+
+export const getScale = (key, type) => {
+    const scale = Scale.get(`${key} ${type}`);
+    const scaleChordTypes = Scale.scaleChords(`${key} ${type}`);
+
+    return {
+        ...scale,
+        chordTypes: scaleChordTypes,
+    };
 };

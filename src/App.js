@@ -4,23 +4,10 @@ import store from './redux/store';
 import Controls from './components/Controls';
 import ProgressionVisualizer from './components/ProgressionVisualizer';
 import Metronome from './components/Metronome';
-import ChordVisualizer from './components/ChordsVisualizer/ChordsVisualizer';
+import ChordVisualizer from './components/ChordsVisualizer';
+import ScaleVisualizer from './components/ScaleVisualizer';
 import { CssBaseline } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { ChordType, Chord, ScaleType, Scale, Key } from "@tonaljs/tonal";
-
-
-const getScale = (key, type) => {
-    const scale = Scale.get(`${key} ${type}`);
-    const scaleChordTypes = Scale.scaleChords(type);
-
-    return {
-        ...scale,
-        chordTypes: scaleChordTypes,
-        chords: scaleChordTypes.map(type => Chord.getChord(type, key)), //???
-    };
-};
-
 
 const theme = createMuiTheme();
 
@@ -29,6 +16,7 @@ function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline>
                 <Provider store={store}>
+                    <ScaleVisualizer />
                     <Metronome />
                     <Controls />
                     <ProgressionVisualizer />
