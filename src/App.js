@@ -6,6 +6,7 @@ import ProgressionVisualizer from './components/ProgressionVisualizer';
 import Metronome from './components/Metronome';
 import ChordVisualizer from './components/ChordsVisualizer';
 import ScaleVisualizer from './components/ScaleVisualizer';
+import PitchDetector from './components/PitchDetector';
 import { CssBaseline } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
@@ -21,6 +22,7 @@ function App() {
                     <Controls />
                     <ProgressionVisualizer />
                     <ChordVisualizer />
+                    <PitchDetector />
                 </Provider>
             </CssBaseline>
         </ThemeProvider>

@@ -5,6 +5,7 @@ import {
     SET_SELECTED_KEY_TONIC,
     SET_SELECTED_KEY_TYPE,
     SET_SELECTED_PROGRESSION_INDEX,
+    SET_DETECTED_PITCH,
 } from './actionTypes';
 
 export const toggleStartMetronome = () => ({
@@ -34,4 +35,9 @@ export const setSelectedKeyType = keyType => ({
 export const setSelectedProgressionIndex = selectedProgressionIndex => ({
     type: SET_SELECTED_PROGRESSION_INDEX,
     payload: selectedProgressionIndex,
+});
+
+export const setDetectedPitch = pitch => ({
+    type: SET_DETECTED_PITCH,
+    payload: pitch,
 });
