@@ -6,6 +6,8 @@ import { Box, Slider, InputLabel } from '@material-ui/core';
 import debounce from 'lodash.debounce';
 
 const SET_BPM_DEBOUNCE_WAIT = 100;
+const MIN_BPM = 30;
+const MAX_BPM = 220;
 
 function BpmController() {
     const dispatch = useDispatch();
@@ -26,8 +28,8 @@ function BpmController() {
                 aria-labelledby="bpm-slider-label"
                 valueLabelDisplay="auto"
                 step={1}
-                min={30}
-                max={220}
+                min={MIN_BPM}
+                max={MAX_BPM}
             />
         </Box>
     );
