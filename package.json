@@ -25,7 +25,7 @@
     },
     "scripts": {
         "start": "react-app-rewired start",
-        "build": "react-app-rewired build",
+        "build": "BUNDLE_VISUALIZE=1 react-app-rewired build",
         "test": "react-app-rewired test",
         "eject": "react-app-rewired eject"
     },
@@ -60,6 +60,7 @@
         "eslint-config-prettier": "^6.11.0",
         "eslint-plugin-prettier": "^3.1.4",
         "prettier": "2.1.1",
-        "react-app-rewired": "^2.1.6"
+        "react-app-rewired": "^2.1.6",
+        "webpack-bundle-analyzer": "^3.8.0"
     }
 }

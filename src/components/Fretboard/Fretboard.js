@@ -11,9 +11,10 @@ import NotePosition from './components/NotePosition';
 const Container = styled.div`
     margin: 50px;
     height: 300px;
+    user-select: none;
 `;
 
-function Fretboard({ fretCount, tuning, selectedNotes, highlightedNotes, theme }) {
+function Fretboard({ fretCount, tuning, selectedNotes, highlightedNotes, theme, reversed, notePointerEvents }) {
     const stringCount = tuning.length;
     const selectedNotesObj = useMemo(() => selectedNotes.map(n => Note.get(n)), [selectedNotes]);
     const highlightedNotesObj = useMemo(() => highlightedNotes.map(n => ({ ...n, note: Note.get(n.note) })), [
@@ -22,7 +23,7 @@ function Fretboard({ fretCount, tuning, selectedNotes, highlightedNotes, theme }
 
     const notes = useMemo(
         () =>
-            tuning.map(rootNote => {
+            (reversed ? tuning.slice(0).reverse() : tuning).map(rootNote => {
                 return times(fretCount - 1, fretNo => {
                     const noteSymbol = transpose(rootNote, Interval.fromSemitones(fretNo));
                     const note = Note.get(noteSymbol);
@@ -30,7 +31,7 @@ function Fretboard({ fretCount, tuning, selectedNotes, highlightedNotes, theme }
                     return note;
                 });
             }),
-        [tuning, fretCount]
+        [tuning, fretCount, reversed]
     );
 
     return (
@@ -49,7 +50,13 @@ function Fretboard({ fretCount, tuning, selectedNotes, highlightedNotes, theme }
                     transform="translate(-36 0)"
                 >
                     {times(stringCount, i => (
-                        <String key={i} stringCount={stringCount} fretCount={fretCount} stringNo={i} />
+                        <String
+                            key={i}
+                            stringCount={stringCount}
+                            fretCount={fretCount}
+                            stringNo={i}
+                            reversed={reversed}
+                        />
                     ))}
                     {times(fretCount, i => (
                         <Fret key={i} fretCount={fretCount} fretNo={i} />
@@ -58,6 +65,7 @@ function Fretboard({ fretCount, tuning, selectedNotes, highlightedNotes, theme }
                         notesOnString.map((note, fretNo) => {
                             return (
                                 <NotePosition
+                                    {...notePointerEvents}
                                     key={note.name}
                                     highlightedNotes={highlightedNotesObj}
                                     selectedNotes={selectedNotesObj}
@@ -93,11 +101,19 @@ Fretboard.propTypes = {
         stringColor: PropTypes.string.isRequired,
         fretColor: PropTypes.string.isRequired,
     }).isRequired,
+    reversed: PropTypes.bool.isRequired,
+    notePointerEvents: PropTypes.shape({
+        onPointerEnter: PropTypes.func,
+        onPointerLeave: PropTypes.func,
+        onPointerDown: PropTypes.func,
+        onPointerUp: PropTypes.func,
+    }),
 };
 
 Fretboard.defaultProps = {
     tuning: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'],
     fretCount: 12,
+    reversed: true,
     selectedNotes: [],
     highlightedNotes: [],
     theme: {

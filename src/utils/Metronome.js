@@ -8,8 +8,6 @@ class Metronome {
     static lookahead = 25.0;
 
     constructor(tickCallback) {
-        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
         if (!window.AudioContext) {
             throw new Error('AudioContext not supported');
         }

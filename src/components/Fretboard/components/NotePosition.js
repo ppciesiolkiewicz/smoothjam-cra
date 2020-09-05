@@ -17,7 +17,23 @@ const Circle = styled.circle`
     }}
 `;
 
-function NotePosition({ selectedNotes, highlightedNotes, stringNo, fretNo, fretCount, stringCount, note }) {
+const Text = styled.text`
+    pointer-events: none;
+`;
+
+function NotePosition({
+    selectedNotes,
+    highlightedNotes,
+    stringNo,
+    fretNo,
+    fretCount,
+    stringCount,
+    note,
+    onPointerEnter,
+    onPointerLeave,
+    onPointerUp,
+    onPointerDown,
+}) {
     const y = getStringYPosition(stringCount, stringNo);
     const x = (getFretXPosition(fretCount, fretNo) + getFretXPosition(fretCount, fretNo + 1)) / 2;
 
@@ -30,15 +46,19 @@ function NotePosition({ selectedNotes, highlightedNotes, stringNo, fretNo, fretC
     return (
         <g>
             <Circle
+                onPointerEnter={() => onPointerEnter(note)}
+                onPointerLeave={() => onPointerLeave(note)}
+                onPointerUp={() => onPointerUp(note)}
+                onPointerDown={() => onPointerDown(note)}
                 isHighlighted={highlight}
                 highlightColor={highlight?.highlightColor}
                 cx={`${x}%`}
                 cy={`${y}%`}
                 r="20"
             ></Circle>
-            <text x={`${x}%`} y={`${y}%`} textAnchor="middle" strokeWidth="0.5" fontSize="10" dy=".3em">
+            <Text x={`${x}%`} y={`${y}%`} textAnchor="middle" strokeWidth="0.5" fontSize="10" dy=".3em">
                 {note.name}
-            </text>
+            </Text>
         </g>
     );
 }
@@ -47,6 +67,17 @@ NotePosition.propTypes = {
     highlightedNotes: PropTypes.arrayOf(
         PropTypes.oneOfType(PropTypes.shape({ note: PropTypes.object.isRequired, highlightColor: PropTypes.string }))
     ).isRequired,
+    onPointerEnter: PropTypes.func.isRequired,
+    onPointerLeave: PropTypes.func.isRequired,
+    onPointerUp: PropTypes.func.isRequired,
+    onPointerDown: PropTypes.func.isRequired,
+};
+
+NotePosition.defaultProps = {
+    onPointerEnter: () => {},
+    onPointerLeave: () => {},
+    onPointerUp: () => {},
+    onPointerDown: () => {},
 };
 
 export default NotePosition;
