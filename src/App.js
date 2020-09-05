@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import store from '@store';
 import Controls from './components/Controls';
 import ProgressionVisualizer from './components/ProgressionVisualizer';
 import Metronome from './components/Metronome';

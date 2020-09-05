@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { setCurrentBeat } from '../../redux/actions';
-import Metronome from '../../utils/Metronome';
+import { setCurrentBeat } from '@features/metronome/metronome.slice';
+import Metronome from '@utils/Metronome';
 
 class MetronomeComponent extends Component {
     constructor(props) {

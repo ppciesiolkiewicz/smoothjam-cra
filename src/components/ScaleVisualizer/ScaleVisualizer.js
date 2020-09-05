@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectScale } from '@redux/selectors';
+import { selectScale } from '@features/progression/progression.slice';
 import Fretboard from '@components/Fretboard';
 
 function ScaleVisualizer() {

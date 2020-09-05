@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { PitchDetector as PD } from 'pitchy';
-import { setDetectedPitch } from '@redux/actions';
+import { setDetectedPitch } from '@features/pitch/pitch.slice';
 
 function PitchDetector({ clarityThreshold, analyserMinDecibels, analyserMaxDecibels, analyserSmoothingTimeConstant }) {
     const dispatch = useDispatch();

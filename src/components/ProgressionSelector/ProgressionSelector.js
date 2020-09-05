@@ -1,7 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedProgressionIndex } from '@redux/actions';
-import { selectAvailableProgressions, selectSelectedProgressionIndexIndex } from '@redux/selectors';
+import {
+    setSelectedProgressionIndex,
+    selectAvailableProgressions,
+    selectSelectedProgressionIndexIndex,
+} from '@features/progression/progression.slice';
 import { Box, Select, MenuItem, InputLabel } from '@material-ui/core';
 
 function ProgressionSelector() {
@@ -14,7 +17,11 @@ function ProgressionSelector() {
     return (
         <Box>
             <InputLabel id="progression-select-label">Progression</InputLabel>
-            <Select labelId="progression-select-label" value={selectedProgressionIndex} onChange={handleProgressionIndexChange}>
+            <Select
+                labelId="progression-select-label"
+                value={selectedProgressionIndex}
+                onChange={handleProgressionIndexChange}
+            >
                 {availableProgressions.map((p, index) => (
                     <MenuItem key={index} value={index}>
                         {p.name}

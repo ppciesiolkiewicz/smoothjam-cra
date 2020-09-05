@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setBpm } from '@redux/actions';
-import { selectBpm } from '@redux/selectors';
+import { setBpm } from '@features/metronome/metronome.slice';
+import { selectBpm } from '@features/metronome/metronome.slice';
 import { Box, Slider, InputLabel } from '@material-ui/core';
 
 function BpmController() {

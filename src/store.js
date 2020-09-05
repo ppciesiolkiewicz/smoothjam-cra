@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import metronome from './reducers/metronome';
-import progression from './reducers/progression';
-import pitch from './reducers/pitch';
+import metronome from '@features/metronome/metronome.slice';
+import progression from '@features/progression/progression.slice';
+import pitch from '@features/pitch/pitch.slice';
 
 export default configureStore({
     reducer: { metronome, progression, pitch },

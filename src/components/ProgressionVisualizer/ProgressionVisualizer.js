@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { selectCurrentBeat, selectProgressionChords, selectBeatCount } from '../../redux/selectors';
+import { selectProgressionChords, selectBeatCount } from '@features/progression/progression.slice';
+import { selectCurrentBeat } from '@features/metronome/metronome.slice';
 
 const BeatProgressDot = styled.div`
     border: 1px solid #000;

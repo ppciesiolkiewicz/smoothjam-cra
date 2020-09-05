@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleStartMetronome } from '@redux/actions';
-import { selectIsPlaying } from '@redux/selectors';
+import { toggleStartMetronome, selectIsPlaying } from '@features/metronome/metronome.slice';
 import { Fab } from '@material-ui/core';
 import { PlayArrow, Stop } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';

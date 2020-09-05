@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectProgressionChords } from '@redux/selectors';
+import { selectProgressionChords } from '@features/progression/progression.slice';
 import { Grid } from '@material-ui/core';
 
 import Chord from '@components/Chord';

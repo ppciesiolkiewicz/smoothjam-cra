@@ -1,7 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedKeyTonic, setSelectedKeyType } from '@redux/actions';
-import { selectSelectedKeyTonic, selectSelectedKeyType, selectAvailableKeys } from '@redux/selectors';
+import {
+    setSelectedKeyTonic,
+    setSelectedKeyType,
+    selectSelectedKeyTonic,
+    selectSelectedKeyType,
+    selectAvailableKeys,
+} from '@features/progression/progression.slice';
 import { Box, Select, MenuItem, InputLabel } from '@material-ui/core';
 
 function Controls() {
