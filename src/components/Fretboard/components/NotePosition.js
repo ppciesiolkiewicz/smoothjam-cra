@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { getStringYPosition, getFretXPosition } from '../utils';
+import { getNoteXYPosition } from '../utils';
 import { areNotesEqual } from '@utils/progression';
 
 const Circle = styled.circle`
@@ -34,8 +34,7 @@ function NotePosition({
     onPointerUp,
     onPointerDown,
 }) {
-    const y = getStringYPosition(stringCount, stringNo);
-    const x = (getFretXPosition(fretCount, fretNo) + getFretXPosition(fretCount, fretNo + 1)) / 2;
+    const [x, y] = getNoteXYPosition(stringNo, stringCount, fretNo, fretCount);
 
     if (selectedNotes?.length && !selectedNotes.find(sn => areNotesEqual(sn, note))) {
         return null;

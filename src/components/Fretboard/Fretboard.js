@@ -6,6 +6,7 @@ import { transpose } from '@tonaljs/core';
 import { Interval, Note } from '@tonaljs/tonal';
 import String from './components/String';
 import Fret from './components/Fret';
+import Inlays from './components/Inlays';
 import NotePosition from './components/NotePosition';
 
 const Container = styled.div`
@@ -78,6 +79,7 @@ function Fretboard({ fretCount, tuning, selectedNotes, highlightedNotes, theme, 
                             );
                         })
                     )}
+                    <Inlays fretCount={fretCount} />
                 </svg>
             </Container>
         </ThemeProvider>
