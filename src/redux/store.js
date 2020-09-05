@@ -1,6 +1,9 @@
-import { createStore, compose, applyMiddleware } from 'redux';
-import rootReducer from './reducers';
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middleware = [];
+import { configureStore } from '@reduxjs/toolkit';
+import metronome from './reducers/metronome';
+import progression from './reducers/progression';
 
-export default createStore(rootReducer, {}, composeEnhancers(applyMiddleware(...middleware)));
+export default configureStore({
+    reducer: { metronome, progression },
+    middleware: getDefaultMiddleware => getDefaultMiddleware(),
+    devTools: true,
+});
