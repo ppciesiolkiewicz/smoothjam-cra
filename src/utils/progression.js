@@ -32,3 +32,5 @@ export const getScale = (key, type) => {
         chordTypes: scaleChordTypes,
     };
 };
+
+export const areNotesEqual = (n1, n2) => n1.chroma === n2.chroma && (!n1.oct || n1.oct === n2.oct);

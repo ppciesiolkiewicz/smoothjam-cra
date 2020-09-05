@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { getStringYPosition, getFretXPosition, areNotesEqual } from '../utils';
+import { getStringYPosition, getFretXPosition } from '../utils';
+import { areNotesEqual } from '@utils/progression';
 
 const Circle = styled.circle`
     ${({ isHighlighted, highlightColor, theme: { note } }) => {
