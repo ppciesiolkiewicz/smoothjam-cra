@@ -11,6 +11,7 @@
         "@testing-library/user-event": "^7.2.1",
         "@tombatossals/react-chords": "^0.2.10",
         "@tonaljs/tonal": "^4.0.2",
+        "lodash.debounce": "^4.0.8",
         "lodash.times": "^4.3.2",
         "pitchy": "^2.0.1",
         "react": "^16.13.1",
