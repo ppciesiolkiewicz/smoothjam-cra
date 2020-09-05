@@ -6,7 +6,7 @@ import { transpose } from '@tonaljs/core';
 import { Interval, Note } from '@tonaljs/tonal';
 import String from './components/String';
 import Fret from './components/Fret';
-import NoteDot from './components/NotePosition';
+import NotePosition from './components/NotePosition';
 
 const Container = styled.div`
     margin: 50px;
@@ -57,7 +57,7 @@ function Fretboard({ fretCount, tuning, selectedNotes, highlightedNotes, theme }
                     {notes.map((notesOnString, stringNo) =>
                         notesOnString.map((note, fretNo) => {
                             return (
-                                <NoteDot
+                                <NotePosition
                                     key={note.name}
                                     highlightedNotes={highlightedNotesObj}
                                     selectedNotes={selectedNotesObj}
