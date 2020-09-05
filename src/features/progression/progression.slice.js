@@ -33,7 +33,7 @@ const availableProgressions = {
     ],
 };
 const availableKeyTonics = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
-const availableKeyTypes = Scale.names();
+const availableKeyTypes = Scale.names().sort();
 
 const initialProgressionIndex = 0;
 const initialKeyTonic = 'C';
