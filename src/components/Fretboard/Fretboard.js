@@ -95,7 +95,7 @@ Fretboard.propTypes = {
 
 Fretboard.defaultProps = {
     tuning: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'],
-    fretCount: 12,
+    fretCount: 12, // TODO: fix how this number is treated
     reversed: true,
     selectedNotes: [],
     highlightedNotes: [],

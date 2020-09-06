@@ -8,7 +8,7 @@ export const getNoteXYPosition = (stringNo, stringCount, fretNo, fretCount) => {
 };
 
 export const getInlayXYPosition = (fretNo, fretCount) => {
-    const y = 110;
+    const y = 110; // TODO: fix
     const x = (getFretXPosition(fretCount, fretNo) + getFretXPosition(fretCount, fretNo + 1)) / 2;
     return [x, y];
 };
