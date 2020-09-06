@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import times from 'lodash.times';
 import { getFretXPosition } from '../utils';
 
 const Rect = styled.rect`
@@ -24,4 +25,8 @@ function Fret({ fretCount, fretNo }) {
     return <Rect x={x} y="0" width="0.5" height="100%" />;
 }
 
-export default Fret;
+function Frets({ fretCount }) {
+    return times(fretCount, i => <Fret key={i} fretCount={fretCount} fretNo={i} />);
+}
+
+export default Frets;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import times from 'lodash.times';
 import { getStringYPosition, getFretXPosition } from '../utils';
 
 const Line = styled.line`
@@ -15,4 +16,10 @@ function String({ stringCount, fretCount, stringNo, reversed }) {
     return <Line x1={x} x2="100%" y1={y} y2={y} strokeWidth={strokeWidth} />;
 }
 
-export default String;
+function Strings({ stringCount, fretCount, reversed }) {
+    return times(stringCount, i => (
+        <String key={i} stringCount={stringCount} fretCount={fretCount} stringNo={i} reversed={reversed} />
+    ));
+}
+
+export default Strings;

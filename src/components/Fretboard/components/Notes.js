@@ -79,4 +79,24 @@ NotePosition.defaultProps = {
     onPointerDown: () => {},
 };
 
-export default NotePosition;
+function Notes({ notes, highlightedNotes, selectedNotes, stringCount, fretCount, notePointerEvents }) {
+    return notes.map((notesOnString, stringNo) =>
+        notesOnString.map((note, fretNo) => {
+            return (
+                <NotePosition
+                    key={note.name}
+                    highlightedNotes={highlightedNotes}
+                    selectedNotes={selectedNotes}
+                    stringCount={stringCount}
+                    fretCount={fretCount}
+                    stringNo={stringNo}
+                    fretNo={fretNo}
+                    note={note}
+                    {...notePointerEvents}
+                />
+            );
+        })
+    );
+}
+
+export default Notes;

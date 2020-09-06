@@ -1,17 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
 import times from 'lodash.times';
 import { transpose } from '@tonaljs/core';
 import { Interval, Note } from '@tonaljs/tonal';
-import String from './components/String';
-import Fret from './components/Fret';
+import Strings from './components/Strings';
+import Frets from './components/Frets';
 import Inlays from './components/Inlays';
-import NotePosition from './components/NotePosition';
+import Notes from './components/Notes';
 
 const Container = styled.div`
     margin: 50px;
     height: 300px;
+    width: 70%;
     user-select: none;
 `;
 
@@ -22,18 +23,17 @@ function Fretboard({ fretCount, tuning, selectedNotes, highlightedNotes, theme, 
         highlightedNotes,
     ]);
 
-    const notes = useMemo(
-        () =>
-            (reversed ? tuning.slice(0).reverse() : tuning).map(rootNote => {
-                return times(fretCount - 1, fretNo => {
-                    const noteSymbol = transpose(rootNote, Interval.fromSemitones(fretNo));
-                    const note = Note.get(noteSymbol);
+    const notes = useMemo(() => {
+        const t = reversed ? tuning.slice(0).reverse() : tuning;
+        return t.map(rootNote => {
+            return times(fretCount - 1, fretNo => {
+                const noteSymbol = transpose(rootNote, Interval.fromSemitones(fretNo));
+                const note = Note.get(noteSymbol);
 
-                    return note;
-                });
-            }),
-        [tuning, fretCount, reversed]
-    );
+                return note;
+            });
+        });
+    }, [tuning, fretCount, reversed]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -50,35 +50,16 @@ function Fretboard({ fretCount, tuning, selectedNotes, highlightedNotes, theme, 
                     style={{ overflow: 'visible' }}
                     transform="translate(-36 0)"
                 >
-                    {times(stringCount, i => (
-                        <String
-                            key={i}
-                            stringCount={stringCount}
-                            fretCount={fretCount}
-                            stringNo={i}
-                            reversed={reversed}
-                        />
-                    ))}
-                    {times(fretCount, i => (
-                        <Fret key={i} fretCount={fretCount} fretNo={i} />
-                    ))}
-                    {notes.map((notesOnString, stringNo) =>
-                        notesOnString.map((note, fretNo) => {
-                            return (
-                                <NotePosition
-                                    {...notePointerEvents}
-                                    key={note.name}
-                                    highlightedNotes={highlightedNotesObj}
-                                    selectedNotes={selectedNotesObj}
-                                    stringCount={stringCount}
-                                    fretCount={fretCount}
-                                    stringNo={stringNo}
-                                    fretNo={fretNo}
-                                    note={note}
-                                />
-                            );
-                        })
-                    )}
+                    <Strings stringCount={stringCount} fretCount={fretCount} reversed={reversed} />
+                    <Frets fretCount={fretCount} />
+                    <Notes
+                        notes={notes}
+                        highlightedNotes={highlightedNotesObj}
+                        selectedNotes={selectedNotesObj}
+                        stringCount={stringCount}
+                        fretCount={fretCount}
+                        notePointerEvents={notePointerEvents}
+                    />
                     <Inlays fretCount={fretCount} />
                 </svg>
             </Container>
